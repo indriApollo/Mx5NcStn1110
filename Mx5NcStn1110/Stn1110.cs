@@ -19,8 +19,7 @@ public class Stn1110
     {
         _port.Open();
         
-        // reset
-        SendCommand("ATZ", "ELM327 v1.4b");
+        Reset();
         
         // disable echo
         SendCommand("ATE0");
@@ -48,22 +47,30 @@ public class Stn1110
 
     public void StopMonitoring()
     {
+        _port.DiscardInBuffer(); // TODO should drain until we read STOPPED or error
         // send a single \r
         SendCommand("", "STOPPED");
     }
 
-    public string? ReadCanMessage()
+    public CanMessage? ReadCanMessage()
     {
-        if (_port.BytesToRead <= 0)
+        var line = ReadLineNoTimeout();
+        if (line is null)
             return null;
-        
-        try
+        return ParseCanMessageString(line);
+    }
+
+    private void Reset()
+    {
+        WriteLine("ATZ");
+
+        var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(10)).Token;
+
+        while (!cancellationToken.IsCancellationRequested)
         {
-            return ReadLine();
-        }
-        catch (TimeoutException)
-        {
-            return null;
+            var line = ReadLineNoTimeout();
+            if (line != null && line.Contains("ELM327"))
+                break;
         }
     }
 
@@ -71,6 +78,8 @@ public class Stn1110
     {
         WriteLine(cmd);
         var ack = ReadLine();
+        if (ack == cmd) // discard echo and try to get ack from next line
+            ack = ReadLine();
 
         if (ack != expectedAck)
             throw new Stn1110Exception($"cmd <{cmd}> expected ack<{expectedAck}> but got <{ack}>");
@@ -81,7 +90,7 @@ public class Stn1110
         if (message.Length < 4) // we expect at least 3 id bytes and 1 data byte
             return null; // unhandled message
         var id = ushort.Parse(message[..3], NumberStyles.HexNumber);
-        var data = Convert.FromHexString(message[4..]);
+        var data = Convert.FromHexString(message[3..]);
 
         return new CanMessage(id, data);
     }
@@ -94,8 +103,22 @@ public class Stn1110
 
     private string? ReadLine()
     {
-        var text = _port.ReadLine();
+        var text = _port.ReadLine()?.Trim('>'); // discard prompt char
         Console.WriteLine($"in: '{text}'");
+        if (text == "") // discard empty responses
+            return ReadLine();
         return text;
+    }
+
+    private string? ReadLineNoTimeout()
+    {
+        try
+        {
+            return ReadLine();
+        }
+        catch (TimeoutException)
+        {
+            return null;
+        }
     }
 }

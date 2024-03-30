@@ -9,7 +9,8 @@ stn.SetupConnection();
 stn.AddFilter(0x430);
 
 stn.StartMonitoring();
+Thread.Sleep(1000);
 var msg = stn.ReadCanMessage();
 stn.StopMonitoring();
 
-Console.WriteLine(msg);
+Console.WriteLine(msg?.Id);
