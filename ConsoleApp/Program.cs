@@ -4,13 +4,32 @@ var portName = args[0];
 
 var stn = new Stn1110(portName, 115200);
 
-stn.SetupConnection();
+var metrics = new Mx5NcMetrics(stn);
 
-stn.AddFilter(0x430);
+var cts = new CancellationTokenSource();
+Console.CancelKeyPress += (s, e) =>
+{
+    Console.WriteLine("Stopping...");
+    cts.Cancel();
+    e.Cancel = true;
+};
 
-stn.StartMonitoring();
-Thread.Sleep(1000);
-var msg = stn.ReadCanMessage();
-stn.StopMonitoring();
+var cancellationToken = cts.Token;
 
-Console.WriteLine(msg?.Id);
+var run = metrics.RunAsync(cancellationToken);
+
+while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
+{
+    Console.WriteLine($"RPM {metrics.Rpm}");
+    Console.WriteLine($"Speed {metrics.SpeedKmh} Kmh");
+    Console.WriteLine($"Accel pedal {metrics.AcceleratorPedalPositionPct} %");
+    Console.WriteLine($"Calculated engine load {metrics.CalculatedEngineLoadPct} %");
+    Console.WriteLine($"Coolant temp {metrics.EngineCoolantTempC} °C");
+    Console.WriteLine($"Throttle valve {metrics.ThrottleValvePositionPct} %");
+    Console.WriteLine($"Intake air temp {metrics.IntakeAirTempC} °C");
+    Console.WriteLine($"Fuel level {metrics.FuelLevelPct} %");
+    
+    await Task.Delay(1000, cancellationToken);
+}
+
+await run;
