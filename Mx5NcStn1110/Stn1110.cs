@@ -52,9 +52,9 @@ public class Stn1110
         SendCommand("", "STOPPED");
     }
 
-    public CanMessage? ReadCanMessage()
+    public CanMessage? ReadCanMessage(bool log = false)
     {
-        var line = ReadLineNoTimeout();
+        var line = ReadLineNoTimeout(log);
         if (line is null)
             return null;
         return ParseCanMessageString(line);
@@ -101,20 +101,20 @@ public class Stn1110
         _port.WriteLine(text);
     }
 
-    private string? ReadLine()
+    private string? ReadLine(bool log = true)
     {
         var text = _port.ReadLine()?.Trim('>'); // discard prompt char
-        Console.WriteLine($"in: '{text}'");
+        if (log) Console.WriteLine($"in: '{text}'");
         if (text == "") // discard empty responses
-            return ReadLine();
+            return ReadLine(log);
         return text;
     }
 
-    private string? ReadLineNoTimeout()
+    private string? ReadLineNoTimeout(bool log = true)
     {
         try
         {
-            return ReadLine();
+            return ReadLine(log);
         }
         catch (TimeoutException)
         {

@@ -31,6 +31,8 @@ public class Mx5NcMetrics(Stn1110 stn)
     public void Setup()
     {
         stn.SetupConnection();
+        stn.AddFilter(CanId.RpmSpeedAccel);
+        stn.AddFilter(CanId.LoadCoolantThrottleIntake);
         stn.AddFilter(CanId.FuelLevel);
     }
 

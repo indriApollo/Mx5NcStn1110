@@ -16,7 +16,8 @@ Console.CancelKeyPress += (s, e) =>
 
 var cancellationToken = cts.Token;
 
-var run = metrics.RunAsync(cancellationToken);
+metrics.Setup();
+var run = Task.Run(async () => await metrics.RunAsync(cancellationToken));
 
 while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
 {
@@ -28,6 +29,7 @@ while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
     Console.WriteLine($"Throttle valve {metrics.ThrottleValvePositionPct} %");
     Console.WriteLine($"Intake air temp {metrics.IntakeAirTempC} °C");
     Console.WriteLine($"Fuel level {metrics.FuelLevelPct} %");
+    Console.WriteLine("=====");
     
     await Task.Delay(1000, cancellationToken);
 }
