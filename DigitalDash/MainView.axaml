@@ -2,18 +2,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:digitalDash="clr-namespace:DigitalDash"
+             xmlns:userControls="clr-namespace:DigitalDash.UserControls"
              mc:Ignorable="d"
              d:DesignWidth="1024"
              d:DesignHeight="600"
              x:Class="DigitalDash.MainView">
-    <Grid ColumnDefinitions="*,*,*" RowDefinitions="120,*,*">
-        <digitalDash:RpmBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
-        <digitalDash:Fuel Grid.Row="1" Grid.Column="0"/>
-        <digitalDash:RpmSpeed Grid.Row="1" Grid.Column="1"/>
-        <digitalDash:Temperatures Grid.Row="1" Grid.Column="2"/>
-        <digitalDash:WheelSpeeds Grid.Row="2" Grid.Column="0"/>
-        <digitalDash:Chrono Grid.Row="2" Grid.Column="1"/>
-        <digitalDash:DriverInputs Grid.Row="2" Grid.Column="2"/>
+    <Grid ColumnDefinitions="*,*,*" RowDefinitions="120,*,*" ShowGridLines="True">
+        <userControls:RpmBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center"/>
+        <userControls:Fuel Grid.Row="1" Grid.Column="0"/>
+        <userControls:RpmSpeed Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
+        <userControls:Temperatures Grid.Row="1" Grid.Column="2"/>
+        <userControls:WheelSpeeds Grid.Row="2" Grid.Column="0"/>
+        <userControls:Chrono Grid.Row="2" Grid.Column="1"/>
+        <userControls:DriverInputs Grid.Row="2" Grid.Column="2"/>
     </Grid>
 </UserControl>

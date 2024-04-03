@@ -1,8 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
-namespace DigitalDash;
+namespace DigitalDash.UserControls;
 
 public partial class WheelSpeeds : UserControl
 {

@@ -4,6 +4,8 @@ namespace Mx5NcStn1110;
 
 public class Mx5NcMetrics(Stn1110 stn) : IMetrics
 {
+    public ushort RedLine => 7000;
+    
     private ushort _rpm;
     public ushort Rpm => (ushort)(_rpm / 4);
 

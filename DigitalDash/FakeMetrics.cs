@@ -20,10 +20,11 @@ public class FakeMetrics : IMetrics
                 _rpm = 1000;
             }
 
-            return _rpm++;
+            return _rpm+=5;
         }
     }
 
+    public ushort RedLine => 7000;
     public ushort SpeedKmh => (ushort)_rand.Next(0, 200);
     public byte AcceleratorPedalPositionPct => (byte)_rand.Next(0, 100);
     public byte CalculatedEngineLoadPct => (byte)_rand.Next(0, 100);

@@ -2,6 +2,7 @@ namespace Mx5NcStn1110;
 
 public interface IMetrics
 {
+    public ushort RedLine { get; }
     public ushort Rpm { get; }
     public ushort SpeedKmh { get; }
     public byte AcceleratorPedalPositionPct { get; }

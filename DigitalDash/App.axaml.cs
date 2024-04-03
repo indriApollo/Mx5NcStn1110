@@ -6,6 +6,7 @@ namespace DigitalDash;
 
 public partial class App : Application
 {
+    public static readonly Logic Logic = new();
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
