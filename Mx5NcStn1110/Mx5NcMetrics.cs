@@ -2,13 +2,13 @@
 
 namespace Mx5NcStn1110;
 
-public class Mx5NcMetrics(Stn1110 stn)
+public class Mx5NcMetrics(Stn1110 stn) : IMetrics
 {
     private ushort _rpm;
     public ushort Rpm => (ushort)(_rpm / 4);
 
     private ushort _speed;
-    public ushort SpeedKmh => (ushort)(_speed - 100);
+    public ushort SpeedKmh => (ushort)(_speed/100 - 100);
 
     private byte _acceleratorPedalPosition;
     public byte AcceleratorPedalPositionPct => (byte)(_acceleratorPedalPosition * 2);
@@ -36,7 +36,7 @@ public class Mx5NcMetrics(Stn1110 stn)
         stn.AddFilter(CanId.FuelLevel);
     }
 
-    public async Task RunAsync(CancellationToken cancellationToken)
+    public async Task CollectAsync(CancellationToken cancellationToken)
     {
         stn.StartMonitoring();
         while (!cancellationToken.IsCancellationRequested)

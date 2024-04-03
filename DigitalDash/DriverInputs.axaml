@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DigitalDash.DriverInputs">
+    <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+        <TextBlock Grid.Row="0" Grid.Column="0">Accelerator</TextBlock>
+        <ProgressBar Name="Accelerator" Grid.Row="0" Grid.Column="1"/>
+        <TextBlock Grid.Row="1" Grid.Column="0">Throttle</TextBlock>
+        <ProgressBar Name="Throttle" Grid.Row="1" Grid.Column="1"/>
+        <TextBlock Grid.Row="2" Grid.Column="0">Engine Load</TextBlock>
+        <ProgressBar Name="EngineLoad" Grid.Row="2" Grid.Column="1"/>
+        <TextBlock Grid.Row="3" Grid.Column="0">Brakes</TextBlock>
+        <ProgressBar Name="Brakes" Grid.Row="3" Grid.Column="1"/>
+    </Grid>
+</UserControl>

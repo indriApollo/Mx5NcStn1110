@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mx5NcStn1110", "Mx5NcStn111
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{43A21EB1-B218-4ABB-B3A9-F112E7D70DAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalDash", "DigitalDash\DigitalDash.csproj", "{03C46FDE-16BA-43F6-BCDF-93922666B921}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{43A21EB1-B218-4ABB-B3A9-F112E7D70DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43A21EB1-B218-4ABB-B3A9-F112E7D70DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43A21EB1-B218-4ABB-B3A9-F112E7D70DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03C46FDE-16BA-43F6-BCDF-93922666B921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03C46FDE-16BA-43F6-BCDF-93922666B921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03C46FDE-16BA-43F6-BCDF-93922666B921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03C46FDE-16BA-43F6-BCDF-93922666B921}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

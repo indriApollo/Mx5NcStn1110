@@ -17,7 +17,7 @@ Console.CancelKeyPress += (s, e) =>
 var cancellationToken = cts.Token;
 
 metrics.Setup();
-var run = Task.Run(async () => await metrics.RunAsync(cancellationToken));
+var run = Task.Run(async () => await metrics.CollectAsync(cancellationToken));
 
 while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
 {
