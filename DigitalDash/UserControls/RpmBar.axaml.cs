@@ -5,7 +5,7 @@ namespace DigitalDash.UserControls;
 
 public partial class RpmBar : UserControl
 {
-    private const int BarLines = 46;
+    private const int BarLines = 33;
     private const float BarLinePct = BarLines / 100f;
     
     private static readonly IBrush Green = new SolidColorBrush(Colors.LawnGreen);
@@ -15,6 +15,8 @@ public partial class RpmBar : UserControl
     public RpmBar()
     {
         InitializeComponent();
+
+        Bg.Text = new string('|', BarLines);
         
         App.Logic.HighSpeedTimer.Tick += (_, _) =>
         {
