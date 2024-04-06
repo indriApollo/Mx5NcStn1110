@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Media;
 
 namespace DigitalDash.UserControls;
 
@@ -8,9 +7,7 @@ public partial class RpmBar : UserControl
     private const int BarLines = 33;
     private const float BarLinePct = BarLines / 100f;
     
-    private static readonly IBrush Green = new SolidColorBrush(Colors.LawnGreen);
-    private static readonly IBrush Yellow = new SolidColorBrush(Colors.Yellow);
-    private static readonly IBrush Red = new SolidColorBrush(Colors.Red);
+    private readonly Logic _logic = App.Logic;
     
     public RpmBar()
     {
@@ -18,17 +15,19 @@ public partial class RpmBar : UserControl
 
         Bg.Text = new string('|', BarLines);
         
-        App.Logic.HighSpeedTimer.Tick += (_, _) =>
-        {
-            var rpmPct = App.Logic.RpmPct;
+        _logic.RegisterHighSpeedRefresh(Refresh);
+    }
+    
+    private void Refresh()
+    {
+        var rpmPct = _logic.RpmPct;
 
-            Bar.Foreground = rpmPct switch
-            {
-                < 80 => Green,
-                < 90 => Yellow,
-                _ => Red
-            };
-            Bar.Text = new string('|', (int)(rpmPct * BarLinePct));
+        Bar.Foreground = rpmPct switch
+        {
+            < Logic.RpmWarningThrPct => ColorPalette.Green,
+            < Logic.RpmAlertThrPct => ColorPalette.Yellow,
+            _ => ColorPalette.Red
         };
+        Bar.Text = new string('|', (int)(rpmPct * BarLinePct));
     }
 }

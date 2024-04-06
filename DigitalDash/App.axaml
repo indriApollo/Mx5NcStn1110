@@ -7,12 +7,17 @@
     <Application.Styles>
         <FluentTheme />
         <Style Selector="Grid">
-            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="Background" Value="Black"/>
         </Style>
         <Style Selector="TextBlock">
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="FontFamily" Value="Monomaniac One"></Setter>
-            <Setter Property="FontSize" Value="24"></Setter>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Monomaniac One"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="Padding" Value="0 -8 0 -8"></Setter>
+        </Style>
+        <Style Selector="TextBlock.Number">
+            <Setter Property="FontFamily" Value="Share Tech Mono"/>
+            <Setter Property="Padding" Value="0"></Setter>
         </Style>
     </Application.Styles>
 </Application>

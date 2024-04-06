@@ -4,13 +4,17 @@ namespace DigitalDash.UserControls;
 
 public partial class Chrono : UserControl
 {
+    private readonly Logic _logic = App.Logic;
+    
     public Chrono()
     {
         InitializeComponent();
         
-        App.Logic.HighSpeedTimer.Tick += (_, _) =>
-        {
-            Stint.Text = App.Logic.Stint;
-        };
+        _logic.RegisterHighSpeedRefresh(Refresh);
+    }
+
+    private void Refresh()
+    {
+        Stint.Text = _logic.Stint;
     }
 }

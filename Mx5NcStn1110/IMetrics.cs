@@ -11,7 +11,8 @@ public interface IMetrics
     public byte ThrottleValvePositionPct { get; }
     public short IntakeAirTempC { get; }
     public byte FuelLevelPct { get; }
-    
+    public byte BrakesPct { get; }
+
     public void Setup();
     public Task CollectAsync(CancellationToken cancellationToken);
 }

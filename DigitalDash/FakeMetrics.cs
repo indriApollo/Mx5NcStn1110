@@ -20,7 +20,7 @@ public class FakeMetrics : IMetrics
                 _rpm = 1000;
             }
 
-            return _rpm+=5;
+            return _rpm+=9;
         }
     }
 
@@ -28,10 +28,11 @@ public class FakeMetrics : IMetrics
     public ushort SpeedKmh => (ushort)_rand.Next(0, 200);
     public byte AcceleratorPedalPositionPct => (byte)_rand.Next(0, 100);
     public byte CalculatedEngineLoadPct => (byte)_rand.Next(0, 100);
-    public short EngineCoolantTempC => (short)_rand.Next(0, 100);
+    public short EngineCoolantTempC => (short)_rand.Next(0, 150);
     public byte ThrottleValvePositionPct => (byte)_rand.Next(0, 100);
-    public short IntakeAirTempC => (short)_rand.Next(0, 100);
+    public short IntakeAirTempC => (short)_rand.Next(0, 40);
     public byte FuelLevelPct => (byte)_rand.Next(0, 100);
+    public byte BrakesPct => (byte)_rand.Next(0, 100);
     
     public void Setup()
     {

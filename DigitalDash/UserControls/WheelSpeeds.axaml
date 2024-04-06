@@ -6,9 +6,9 @@
              x:Class="DigitalDash.UserControls.WheelSpeeds">
     <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto">
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Wheel Speeds Km/h</TextBlock>
-        <TextBlock Name="Fl" Grid.Row="1" Grid.Column="0">000</TextBlock>
-        <TextBlock Name="Fr" Grid.Row="1" Grid.Column="1">000</TextBlock>
-        <TextBlock Name="Rl" Grid.Row="2" Grid.Column="0">000</TextBlock>
-        <TextBlock Name="Rr" Grid.Row="2" Grid.Column="1">000</TextBlock>
+        <TextBlock Name="Fl" Classes="Number" Grid.Row="1" Grid.Column="0">000</TextBlock>
+        <TextBlock Name="Fr" Classes="Number" Grid.Row="1" Grid.Column="1">000</TextBlock>
+        <TextBlock Name="Rl" Classes="Number" Grid.Row="2" Grid.Column="0">000</TextBlock>
+        <TextBlock Name="Rr" Classes="Number" Grid.Row="2" Grid.Column="1">000</TextBlock>
     </Grid>
 </UserControl>

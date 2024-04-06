@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DigitalDash.UserControls.RpmBar">
     <Grid>
-        <TextBlock Name="Bg" FontSize="152" Foreground="DarkSlateGray" Margin="0 -64 0 0" />
-        <TextBlock Name="Bar" FontSize="152" Margin="0 -64 0 0"/>
+        <TextBlock Name="Bg" FontSize="152" Foreground="DarkSlateGray" Padding="0 -64 0 0" />
+        <TextBlock Name="Bar" FontSize="152" Padding="0 -64 0 0"/>
     </Grid>
 </UserControl>

@@ -6,14 +6,14 @@
              x:Class="DigitalDash.UserControls.RpmSpeed">
     <UserControl.Styles>
         <Style Selector="TextBlock.Big">
-            <Setter Property="FontSize" Value="100"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
         </Style>
     </UserControl.Styles>
-    <Grid ColumnDefinitions="Auto,250,Auto" RowDefinitions="Auto,Auto" ShowGridLines="True">
+    <Grid ColumnDefinitions="Auto,260,Auto" RowDefinitions="Auto,Auto">
         <TextBlock Grid.Row="0" Grid.Column="0">RPM</TextBlock>
-        <TextBlock Name="Rpm" Classes="Big" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">0000</TextBlock>
+        <TextBlock Name="Rpm" FontSize="120" Classes="Big Number" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">0000</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0">Speed</TextBlock>
-        <TextBlock Name="Speed" Classes="Big" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">000</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom">Km/h</TextBlock>
+        <TextBlock Name="Speed" FontSize="100" Classes="Big Number" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">000</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center">Km/h</TextBlock>
     </Grid>
 </UserControl>

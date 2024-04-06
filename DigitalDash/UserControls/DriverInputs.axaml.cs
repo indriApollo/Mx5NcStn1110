@@ -4,15 +4,20 @@ namespace DigitalDash.UserControls;
 
 public partial class DriverInputs : UserControl
 {
+    private readonly Logic _logic = App.Logic;
+    
     public DriverInputs()
     {
         InitializeComponent();
         
-        App.Logic.HighSpeedTimer.Tick += (_, _) =>
-        {
-            Accelerator.Value = App.Logic.Accelerator;
-            Throttle.Value = App.Logic.Throttle;
-            EngineLoad.Value = App.Logic.EngineLoad;
-        };
+        _logic.RegisterHighSpeedRefresh(Refresh);
+    }
+
+    private void Refresh()
+    {
+        Accelerator.Value = _logic.Accelerator;
+        Throttle.Value = _logic.Throttle;
+        EngineLoad.Value = _logic.EngineLoad;
+        Brakes.Value = _logic.Brakes;
     }
 }

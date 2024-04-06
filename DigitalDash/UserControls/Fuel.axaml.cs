@@ -4,13 +4,19 @@ namespace DigitalDash.UserControls;
 
 public partial class Fuel : UserControl
 {
+    private readonly Logic _logic = App.Logic;
+    
     public Fuel()
     {
         InitializeComponent();
-        
-        App.Logic.LowSpeedTimer.Tick += (_, _) =>
-        {
-            FuelGauge.Text = App.Logic.FuelGauge;
-        };
+
+        _logic.RegisterLowSpeedRefresh(Refresh);
+    }
+
+    private void Refresh()
+    {
+        var fuelGauge = _logic.FuelGauge;
+        FuelGauge.Foreground = fuelGauge < Logic.FuelGaugeAlertThrPct ? ColorPalette.Red : ColorPalette.White;
+        FuelGauge.Text = fuelGauge.ToString();
     }
 }

@@ -30,6 +30,8 @@ public class Mx5NcMetrics(Stn1110 stn) : IMetrics
     private byte _fuelLevel;
     public byte FuelLevelPct => (byte)(_fuelLevel / 2.55f);
 
+    public byte BrakesPct => 0; // TODO
+
     public void Setup()
     {
         stn.SetupConnection();
