@@ -17,7 +17,8 @@ class Program
         var builder = BuildAvaloniaApp();
         if (args.Contains("--drm"))
         {
-            SilenceConsole();
+            if (args.Contains("--silence-console"))
+                SilenceConsole();
             // By default, Avalonia will try to detect output card automatically.
             // But you can specify one, for example "/dev/dri/card1".
             return builder.StartLinuxDrm(args: args, card: null, scaling: 1.0);
