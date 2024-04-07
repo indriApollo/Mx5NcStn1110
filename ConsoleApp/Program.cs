@@ -24,11 +24,16 @@ while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
     Console.WriteLine($"RPM {metrics.Rpm}");
     Console.WriteLine($"Speed {metrics.SpeedKmh} Kmh");
     Console.WriteLine($"Accel pedal {metrics.AcceleratorPedalPositionPct} %");
-    Console.WriteLine($"Calculated engine load {metrics.CalculatedEngineLoadPct} %");
-    Console.WriteLine($"Coolant temp {metrics.EngineCoolantTempC} °C");
     Console.WriteLine($"Throttle valve {metrics.ThrottleValvePositionPct} %");
+    Console.WriteLine($"Calculated engine load {metrics.CalculatedEngineLoadPct} %");
+    Console.WriteLine($"Brakes {metrics.BrakesPct} %");
+    Console.WriteLine($"Coolant temp {metrics.EngineCoolantTempC} °C");
     Console.WriteLine($"Intake air temp {metrics.IntakeAirTempC} °C");
     Console.WriteLine($"Fuel level {metrics.FuelLevelPct} %");
+    Console.WriteLine($"FL speed {metrics.FlSpeed} kmh");
+    Console.WriteLine($"FR speed {metrics.FrSpeed} kmh");
+    Console.WriteLine($"RL speed {metrics.RlSpeed} kmh");
+    Console.WriteLine($"RR speed {metrics.RrSpeed} kmh");
     Console.WriteLine("=====");
     
     await Task.Delay(1000, cancellationToken);
