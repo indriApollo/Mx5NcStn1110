@@ -5,6 +5,8 @@ namespace Mx5NcStn1110;
 public class Mx5NcMetrics(Stn1110 stn) : IMetrics
 {
     public ushort RedLine => 7000;
+
+    private readonly SimpleMovingAverage _fuelSma = new(10);
     
     private ushort _rpm;
     public ushort Rpm => (ushort)(_rpm / 4);
@@ -13,6 +15,7 @@ public class Mx5NcMetrics(Stn1110 stn) : IMetrics
     public ushort SpeedKmh => RawToSpeed(_speed);
 
     private byte _acceleratorPedalPosition;
+    // TODO fix: reports 144 % when flat out lol, max was 220 % !
     public byte AcceleratorPedalPositionPct => (byte)(_acceleratorPedalPosition * 2);
 
     private byte _calculatedEngineLoad;
@@ -22,15 +25,17 @@ public class Mx5NcMetrics(Stn1110 stn) : IMetrics
     public short EngineCoolantTempC => (short)(_engineCoolantTemp - 40);
 
     private byte _throttleValvePosition;
+    // TODO observed between 11 <> 89 %
     public byte ThrottleValvePositionPct => (byte)(_throttleValvePosition / 2.55f);
 
     private byte _intakeAirTemp;
     public short IntakeAirTempC => (short)(_intakeAirTemp - 40);
     
     private byte _fuelLevel;
-    public byte FuelLevelPct => (byte)(_fuelLevel / 2.55f);
+    public byte FuelLevelPct => (byte)(_fuelSma.Update(_fuelLevel) / 2.55f);
 
     private ushort _brakePressure;
+    // TODO observed between 0 <> 72 %
     public byte BrakesPct => (byte)(0.2f * Math.Max(0, _brakePressure - 102));
 
     private ushort _flSpeed;
