@@ -30,10 +30,10 @@ while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
     Console.WriteLine($"Coolant temp {metrics.EngineCoolantTempC} °C");
     Console.WriteLine($"Intake air temp {metrics.IntakeAirTempC} °C");
     Console.WriteLine($"Fuel level {metrics.FuelLevelPct} %");
-    Console.WriteLine($"FL speed {metrics.FlSpeed} kmh");
-    Console.WriteLine($"FR speed {metrics.FrSpeed} kmh");
-    Console.WriteLine($"RL speed {metrics.RlSpeed} kmh");
-    Console.WriteLine($"RR speed {metrics.RrSpeed} kmh");
+    Console.WriteLine($"FL speed {metrics.FlSpeedKmh} kmh");
+    Console.WriteLine($"FR speed {metrics.FrSpeedKmh} kmh");
+    Console.WriteLine($"RL speed {metrics.RlSpeedKmh} kmh");
+    Console.WriteLine($"RR speed {metrics.RrSpeedKmh} kmh");
     Console.WriteLine("=====");
     
     await Task.Delay(1000, cancellationToken);

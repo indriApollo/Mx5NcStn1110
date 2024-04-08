@@ -15,7 +15,7 @@ public partial class RpmSpeed : UserControl
 
     private void Refresh()
     {
-        Rpm.Text = _logic.Rpm;
-        Speed.Text = _logic.SpeedKmh;
+        Rpm.Text = _logic.Rpm.ToString();
+        Speed.Text = _logic.SpeedKmh.ToString();
     }
 }

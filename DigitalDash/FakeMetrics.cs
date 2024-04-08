@@ -33,6 +33,10 @@ public class FakeMetrics : IMetrics
     public short IntakeAirTempC => (short)_rand.Next(0, 40);
     public byte FuelLevelPct => (byte)_rand.Next(0, 100);
     public byte BrakesPct => (byte)_rand.Next(0, 100);
+    public ushort FlSpeedKmh => (ushort)_rand.Next(0, 200);
+    public ushort FrSpeedKmh => (ushort)_rand.Next(0, 200);
+    public ushort RlSpeedKmh => (ushort)_rand.Next(0, 200);
+    public ushort RrSpeedKmh => (ushort)_rand.Next(0, 200);
     
     public void Setup()
     {

@@ -3,12 +3,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:digitalDash="clr-namespace:DigitalDash"
+        xmlns:views="clr-namespace:DigitalDash.Views"
         mc:Ignorable="d"
         d:DesignWidth="1024"
         d:DesignHeight="600"
         Width="1024"
         Height="600"
-        x:Class="DigitalDash.MainWindow"
+        x:Class="DigitalDash.Views.MainWindow"
         Title="DigitalDash">
-    <digitalDash:MainView />
+    <views:MainView />
 </Window>

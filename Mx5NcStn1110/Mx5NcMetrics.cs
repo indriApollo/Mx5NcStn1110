@@ -39,16 +39,16 @@ public class Mx5NcMetrics(Stn1110 stn) : IMetrics
     public byte BrakesPct => (byte)(0.2f * Math.Max(0, _brakePressure - 102));
 
     private ushort _flSpeed;
-    public ushort FlSpeed => RawToSpeed(_flSpeed);
+    public ushort FlSpeedKmh => RawToSpeed(_flSpeed);
     
     private ushort _frSpeed;
-    public ushort FrSpeed => RawToSpeed(_frSpeed);
+    public ushort FrSpeedKmh => RawToSpeed(_frSpeed);
     
     private ushort _rlSpeed;
-    public ushort RlSpeed => RawToSpeed(_rlSpeed);
+    public ushort RlSpeedKmh => RawToSpeed(_rlSpeed);
     
     private ushort _rrSpeed;
-    public ushort RrSpeed => RawToSpeed(_rrSpeed);
+    public ushort RrSpeedKmh => RawToSpeed(_rrSpeed);
 
     public void Setup()
     {

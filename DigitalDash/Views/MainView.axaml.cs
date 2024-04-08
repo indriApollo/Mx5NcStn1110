@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace DigitalDash;
+namespace DigitalDash.Views;
 
 public partial class MainView : UserControl
 {
