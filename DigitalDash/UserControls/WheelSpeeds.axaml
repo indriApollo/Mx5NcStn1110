@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DigitalDash.UserControls.WheelSpeeds">
-    <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto">
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Wheels Km/h</TextBlock>
+    <Grid ColumnDefinitions="60,Auto" RowDefinitions="Auto,Auto,Auto">
+        <Image Source="/Assets/esc.png" Width="36" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0"/>
+        <TextBlock Grid.Row="0" Grid.Column="1">Km/h</TextBlock>
         <TextBlock Name="Fl" Classes="Number" Grid.Row="1" Grid.Column="0">000</TextBlock>
         <TextBlock Name="Fr" Classes="Number" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right">000</TextBlock>
         <TextBlock Name="Rl" Classes="Number" Grid.Row="2" Grid.Column="0">000</TextBlock>
