@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia.Threading;
 using Mx5NcStn1110;
 
@@ -10,11 +12,17 @@ public class Logic
     private readonly DispatcherTimer _highSpeedTimer = new();
     private readonly DispatcherTimer _lowSpeedTimer = new();
 
-    private readonly IMetrics _metrics = new FakeMetrics();
+    private readonly IMetrics _metrics;
     private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
-    public Logic()
+    public Logic(string serialPortName, int baudRate)
     {
+        _metrics = serialPortName == "fake"
+            ? new FakeMetrics()
+            : new Mx5NcMetrics(new Stn1110(serialPortName, baudRate));
+        
+        _metrics.Setup();
+        
         _highSpeedTimer.Interval = TimeSpan.FromMilliseconds(1000d/30d); // 30hz
         _lowSpeedTimer.Interval = TimeSpan.FromMilliseconds(1000); // 1hz
         
@@ -53,4 +61,6 @@ public class Logic
     {
         _lowSpeedTimer.Tick += (_, _) => action.Invoke();
     }
+
+    public Task CollectAsync(CancellationToken cancellationToken) => _metrics.CollectAsync(cancellationToken);
 }

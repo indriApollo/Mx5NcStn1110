@@ -69,7 +69,15 @@ public class Mx5NcMetrics(Stn1110 stn) : IMetrics
             if (message is null)
             {
                 // no message, wait a bit
-                await Task.Delay(100, cancellationToken);
+                try
+                {
+                    await Task.Delay(100, cancellationToken);
+                }
+                catch (TaskCanceledException)
+                {
+                    break;
+                }
+
                 continue;
             }
 

@@ -55,9 +55,7 @@ public class Stn1110
     public CanMessage? ReadCanMessage(bool log = false)
     {
         var line = ReadLineNoTimeout(log);
-        if (line is null)
-            return null;
-        return ParseCanMessageString(line);
+        return line is null ? null : ParseCanMessageString(line);
     }
 
     private void Reset()
@@ -85,7 +83,7 @@ public class Stn1110
             throw new Stn1110Exception($"cmd <{cmd}> expected ack<{expectedAck}> but got <{ack}>");
     }
 
-    private CanMessage? ParseCanMessageString(string message)
+    private static CanMessage? ParseCanMessageString(string message)
     {
         if (message.Length < 4) // we expect at least 3 id bytes and 1 data byte
             return null; // unhandled message
@@ -101,13 +99,15 @@ public class Stn1110
         _port.WriteLine(text);
     }
 
-    private string? ReadLine(bool log = true)
+    private string? ReadLine(bool log = true) 
     {
-        var text = _port.ReadLine()?.Trim('>'); // discard prompt char
-        if (log) Console.WriteLine($"in: '{text}'");
-        if (text == "") // discard empty responses
-            return ReadLine(log);
-        return text;
+        while (true)
+        {
+            var text = _port.ReadLine()?.Trim('>'); // discard prompt char
+            if (log) Console.WriteLine($"in: '{text}'");
+            if (text == "") continue; // discard empty response
+            return text;
+        }
     }
 
     private string? ReadLineNoTimeout(bool log = true)

@@ -44,6 +44,6 @@ public class FakeMetrics : IMetrics
 
     public async Task CollectAsync(CancellationToken cancellationToken)
     {
-        await Task.Delay(TimeSpan.MaxValue, cancellationToken);
+        await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
     }
 }
