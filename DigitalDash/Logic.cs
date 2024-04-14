@@ -52,6 +52,8 @@ public class Logic
     public ushort RrSpeed => _metrics.RrSpeedKmh;
     public string Stint => $"{(int)_stopwatch.Elapsed.TotalMinutes:00}:{_stopwatch.Elapsed.Seconds:00}";
 
+    public long AvgParsingMs => _metrics.AvgParsingTicks / TimeSpan.TicksPerMillisecond;
+
     public void RegisterHighSpeedRefresh(Action action)
     {
         _highSpeedTimer.Tick += (_, _) => action.Invoke();

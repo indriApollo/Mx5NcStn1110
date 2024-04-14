@@ -37,6 +37,8 @@ public class FakeMetrics : IMetrics
     public ushort FrSpeedKmh => (ushort)_rand.Next(0, 200);
     public ushort RlSpeedKmh => (ushort)_rand.Next(0, 200);
     public ushort RrSpeedKmh => (ushort)_rand.Next(0, 200);
+
+    public long AvgParsingTicks => _rand.Next(0, 100000);
     
     public void Setup()
     {

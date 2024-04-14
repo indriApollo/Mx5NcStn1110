@@ -34,6 +34,7 @@ while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
     Console.WriteLine($"FR speed {metrics.FrSpeedKmh} kmh");
     Console.WriteLine($"RL speed {metrics.RlSpeedKmh} kmh");
     Console.WriteLine($"RR speed {metrics.RrSpeedKmh} kmh");
+    Console.WriteLine($"Can msg parsing avg {TimeSpan.FromTicks(metrics.AvgParsingTicks).TotalMilliseconds} ms");
     Console.WriteLine("=====");
     
     await Task.Delay(1000, cancellationToken);

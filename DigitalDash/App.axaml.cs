@@ -16,17 +16,18 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var lifetime = ApplicationLifetime as IControlledApplicationLifetime
-                ?? throw new ArgumentNullException(nameof(ApplicationLifetime));
-
-        // Collect metrics until the application is exiting
-        var cts = new CancellationTokenSource();
-        var collectAsync = Logic.CollectAsync(cts.Token);
-        lifetime.Exit += async (_, _) =>
+        // note: lifetime is null in the editor
+        if (ApplicationLifetime is IControlledApplicationLifetime lifetime)
         {
-            await cts.CancelAsync();
-            await collectAsync;
-        };
+            // Collect metrics until the application is exiting
+            var cts = new CancellationTokenSource();
+            var collectAsync = Logic.CollectAsync(cts.Token);
+            lifetime.Exit += async (_, _) =>
+            {
+                await cts.CancelAsync();
+                await collectAsync;
+            };
+        }
 
         switch (ApplicationLifetime)
         {

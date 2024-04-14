@@ -16,6 +16,8 @@ public interface IMetrics
     public ushort FrSpeedKmh { get; }
     public ushort RlSpeedKmh { get; }
     public ushort RrSpeedKmh { get; }
+    
+    public long AvgParsingTicks { get; }
 
     public void Setup();
     public Task CollectAsync(CancellationToken cancellationToken);

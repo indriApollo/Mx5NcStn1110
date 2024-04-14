@@ -1,4 +1,5 @@
 ﻿using System.Buffers.Binary;
+using System.Diagnostics;
 
 namespace Mx5NcStn1110;
 
@@ -49,6 +50,8 @@ public class Mx5NcMetrics(Stn1110 stn) : IMetrics
     
     private ushort _rrSpeed;
     public ushort RrSpeedKmh => RawToSpeed(_rrSpeed);
+    
+    public long AvgParsingTicks { get; private set; }
 
     public void Setup()
     {
@@ -62,16 +65,19 @@ public class Mx5NcMetrics(Stn1110 stn) : IMetrics
 
     public async Task CollectAsync(CancellationToken cancellationToken)
     {
+        var sw = new Stopwatch();
+        
         stn.StartMonitoring();
         while (!cancellationToken.IsCancellationRequested)
         {
-            var message = stn.ReadCanMessage();
+            sw.Restart();
+            var message = await stn.ReadCanMessage(cancellationToken);
             if (message is null)
             {
                 // no message, wait a bit
                 try
                 {
-                    await Task.Delay(100, cancellationToken);
+                    await Task.Delay(10, cancellationToken);
                 }
                 catch (TaskCanceledException)
                 {
@@ -99,6 +105,8 @@ public class Mx5NcMetrics(Stn1110 stn) : IMetrics
                     ParseWheelSpeeds(message.Data);
                     break;
             }
+
+            AvgParsingTicks = (sw.ElapsedTicks + AvgParsingTicks) / 2;
         }
         stn.StopMonitoring();
     }

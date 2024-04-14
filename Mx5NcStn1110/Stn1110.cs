@@ -6,6 +6,7 @@ namespace Mx5NcStn1110;
 public class Stn1110
 {
     private readonly SerialPort _port;
+    private readonly byte[] _readBuffer = new byte[20 /* 3 id chars, 16 data chars, 1 CR char */];
     
     public Stn1110(string portName, int baudRate)
     {
@@ -52,10 +53,24 @@ public class Stn1110
         SendCommand("", "STOPPED");
     }
 
-    public CanMessage? ReadCanMessage(bool log = false)
+    public async ValueTask<CanMessage?> ReadCanMessage(CancellationToken cancellationToken)
     {
-        var line = ReadLineNoTimeout(log);
-        return line is null ? null : ParseCanMessageString(line);
+        if (_port.BytesToRead < _readBuffer.Length)
+            return null;
+        
+        Array.Clear(_readBuffer);
+        
+        // TODO: this only works if the first byte we read is the start of a line
+        await _port.BaseStream.ReadExactlyAsync(_readBuffer, cancellationToken);
+
+        if (_readBuffer.Last() != '\r')
+        {
+            Console.WriteLine($"not ending with CR {System.Text.Encoding.ASCII.GetString(_readBuffer).Replace("\r", "<CR>")}");
+            return null;
+        }
+
+        var line = System.Text.Encoding.ASCII.GetString(_readBuffer).TrimEnd('\r');
+        return ParseCanMessageString(line);
     }
 
     private void Reset()
