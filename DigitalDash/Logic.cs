@@ -62,5 +62,5 @@ public class Logic
         _lowSpeedTimer.Tick += (_, _) => action.Invoke();
     }
 
-    public Task CollectAsync(CancellationToken cancellationToken) => _metrics.CollectAsync(cancellationToken);
+    public Task CollectAsync(CancellationToken cancellationToken) => Task.Run(async () => await _metrics.CollectAsync(cancellationToken), cancellationToken);
 }

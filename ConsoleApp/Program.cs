@@ -2,7 +2,7 @@
 
 var portName = args[0];
 
-var stn = new Stn1110(portName, 115200);
+var stn = new Stn1110(portName, 921600);
 
 var metrics = new Mx5NcMetrics(stn);
 

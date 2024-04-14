@@ -10,7 +10,7 @@ namespace DigitalDash;
 class Program
 {
     public static string SerialPortName { get; private set; } = "fake";
-    public static int BaudRate { get; private set; } = 115200;
+    public static int BaudRate { get; private set; } = 921600;
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
