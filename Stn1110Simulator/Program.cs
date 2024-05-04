@@ -16,4 +16,5 @@ Console.CancelKeyPress += (s, e) =>
 
 var stn = new Stn1110Simulator.Stn1110Simulator(portName, 115200);
 
+Console.WriteLine("Running");
 await stn.Run(cts.Token);

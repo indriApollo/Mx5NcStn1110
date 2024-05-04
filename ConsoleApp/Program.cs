@@ -22,7 +22,9 @@ Console.CancelKeyPress += (s, e) =>
 
 var cancellationToken = cts.Token;
 
+Console.WriteLine("Setup");
 metrics.Setup();
+Console.WriteLine("Collect");
 var run = metrics.CollectAsync(cancellationToken);
 
 while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)

@@ -8,6 +8,10 @@ public partial class Stn1110Simulator
 {
     private readonly HashSet<string> _filteredCanIds = [];
     private readonly SerialPort _port;
+    private bool _inMonitoringMode;
+    private CancellationTokenSource _cts = null!;
+    private Task _monitoringTask = null!;
+    private readonly Random _random = new();
 
     public Stn1110Simulator(string portName, int baudRate)
     {
@@ -33,6 +37,17 @@ public partial class Stn1110Simulator
                 continue;
             }
 
+            if (_inMonitoringMode)
+            {
+                Console.WriteLine("Stopping Monitoring mode");
+                await _cts.CancelAsync();
+                _inMonitoringMode = false;
+                await _monitoringTask;
+                WriteLine("STOPPED");
+                Write(">");
+                continue;
+            }
+            
             if (line == "ATZ")
             {
                 await RespondToATZ();
@@ -52,6 +67,10 @@ public partial class Stn1110Simulator
             else if (line.StartsWith("STFPA"))
             {
                 HandleSTFPA(line);
+            }
+            else if (line == "STM")
+            {
+                HandleSTM();
             }
             else
             {
@@ -104,6 +123,34 @@ public partial class Stn1110Simulator
         _filteredCanIds.Add(filterCanId);
         WriteLine("OK");
         Write(">");
+    }
+
+    private void HandleSTM()
+    {
+        Console.WriteLine("Starting Monitoring mode");
+        _cts = new CancellationTokenSource();
+        _inMonitoringMode = true;
+        _monitoringTask = SendMonitoringMessages(_cts.Token);
+    }
+
+    private async Task SendMonitoringMessages(CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            foreach (var id in _filteredCanIds)
+            {
+                var data = _random.NextInt64();
+                WriteLine($"{id}{data:X16}");
+            }
+
+            try
+            {
+                await Task.Delay(100, cancellationToken);
+            }
+            catch (TaskCanceledException)
+            {
+            }
+        }
     }
 
     private void WriteLine(string text)
