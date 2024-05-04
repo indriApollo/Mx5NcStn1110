@@ -73,6 +73,11 @@ public class Stn1110
         return ParseCanMessageString(line);
     }
 
+    public void Close()
+    {
+        _port.Close();
+    }
+
     private void Reset()
     {
         WriteLine("ATZ");

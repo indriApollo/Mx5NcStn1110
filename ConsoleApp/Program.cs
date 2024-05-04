@@ -1,5 +1,11 @@
 ﻿using Mx5NcStn1110;
 
+if (args.Length != 1)
+{
+    Console.WriteLine("missing portName arg");
+    return;
+}
+
 var portName = args[0];
 
 var stn = new Stn1110(portName, 921600);
@@ -17,7 +23,7 @@ Console.CancelKeyPress += (s, e) =>
 var cancellationToken = cts.Token;
 
 metrics.Setup();
-var run = Task.Run(async () => await metrics.CollectAsync(cancellationToken));
+var run = metrics.CollectAsync(cancellationToken);
 
 while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
 {
@@ -36,8 +42,21 @@ while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
     Console.WriteLine($"RR speed {metrics.RrSpeedKmh} kmh");
     Console.WriteLine($"Can msg parsing avg {TimeSpan.FromTicks(metrics.AvgParsingTicks).TotalMilliseconds} ms");
     Console.WriteLine("=====");
-    
-    await Task.Delay(1000, cancellationToken);
+
+    try
+    {
+        await Task.Delay(1000, cancellationToken);
+    }
+    catch (TaskCanceledException)
+    {
+    }
 }
 
-await run;
+try
+{
+    await run; // collect any exceptions
+}
+finally
+{
+    stn.Close(); // release serial port
+}
