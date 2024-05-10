@@ -9,7 +9,8 @@ namespace DigitalDash;
 // ReSharper disable once ArrangeTypeModifiers
 class Program
 {
-    public static string SerialPortName { get; private set; } = "fake";
+    public static string UnixDomainSocketName { get; private set; } = "";
+    public static string SerialPortName { get; private set; } = "";
     public static int BaudRate { get; private set; } = 921600;
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
@@ -18,15 +19,31 @@ class Program
     [STAThread]
     public static int Main(string[] args)
     {
+        bool uds = false, sp = false, br = false;
+        
+        if (args.Contains("--uds"))
+        {
+            uds = true;
+            UnixDomainSocketName = args[Array.IndexOf(args, "--uds") + 1];
+        }
+        
         if (args.Contains("--serial-port"))
         {
+            sp = true;
             SerialPortName = args[Array.IndexOf(args, "--serial-port") + 1];
         }
         
         if (args.Contains("--baud-rate"))
         {
+            br = true;
             BaudRate = int.Parse(args[Array.IndexOf(args, "--baud-rate") + 1]);
         }
+
+        if (uds && (sp || br))
+            throw new ArgumentException("Can't use UDS and Serial options at the same time", nameof(args));
+
+        if (br && !sp)
+            throw new ArgumentException("Must also provide Serial Port when providing Baud Rate", nameof(args));
         
         var builder = BuildAvaloniaApp();
         

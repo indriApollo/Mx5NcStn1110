@@ -15,11 +15,9 @@ public class Logic
     private readonly IMetrics _metrics;
     private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
-    public Logic(string serialPortName, int baudRate)
+    public Logic(string unixDomainSocketName, string serialPortName, int baudRate)
     {
-        _metrics = serialPortName == "fake"
-            ? new FakeMetrics()
-            : new Mx5NcMetrics(new Stn1110(serialPortName, baudRate));
+        _metrics = MetricsFactory.GetMetrics(unixDomainSocketName, serialPortName, baudRate);
         
         _metrics.Setup();
         

@@ -84,7 +84,8 @@ public partial class Stn1110Simulator
 
     private async Task RespondToATZ()
     {
-        await Task.Delay(TimeSpan.FromSeconds(5));
+        _filteredCanIds.Clear();
+        await Task.Delay(TimeSpan.FromSeconds(1));
         WriteLine("ELM327 v1.5simu");
         Write(">");
         _port.DiscardInBuffer();

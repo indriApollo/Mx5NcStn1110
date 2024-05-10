@@ -1,16 +1,38 @@
 ﻿using Mx5NcStn1110;
+using Mx5NcStn1110.Shm;
 
-if (args.Length != 1)
+var unixDomainSocketName = "";
+var serialPortName = "";
+var baudRate = 921600;
+
+bool uds = false, sp = false, br = false;
+        
+if (args.Contains("--uds"))
 {
-    Console.WriteLine("missing portName arg");
-    return;
+    uds = true;
+    unixDomainSocketName = args[Array.IndexOf(args, "--uds") + 1];
+}
+        
+if (args.Contains("--serial-port"))
+{
+    sp = true;
+    serialPortName = args[Array.IndexOf(args, "--serial-port") + 1];
+}
+        
+if (args.Contains("--baud-rate"))
+{
+    br = true;
+    baudRate = int.Parse(args[Array.IndexOf(args, "--baud-rate") + 1]);
 }
 
-var portName = args[0];
+if (uds && (sp || br))
+    throw new ArgumentException("Can't use UDS and Serial options at the same time", nameof(args));
 
-var stn = new Stn1110(portName, 921600);
+if (br && !sp)
+    throw new ArgumentException("Must also provide Serial Port when providing Baud Rate", nameof(args));
 
-var metrics = new Mx5NcMetrics(stn);
+//var metrics = MetricsFactory.GetMetrics(unixDomainSocketName, serialPortName, baudRate);
+var metrics = new Mx5NcShmMetrics();
 
 var cts = new CancellationTokenSource();
 Console.CancelKeyPress += (s, e) =>
@@ -54,11 +76,4 @@ while (!cancellationToken.IsCancellationRequested && !run.IsCompleted)
     }
 }
 
-try
-{
-    await run; // collect any exceptions
-}
-finally
-{
-    stn.Close(); // release serial port
-}
+await run; // collect any exceptions
