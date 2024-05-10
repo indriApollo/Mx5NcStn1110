@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.IO.MemoryMappedFiles;
-using System.Runtime.InteropServices;
 
 namespace Mx5NcStn1110.Shm;
 
@@ -21,7 +20,7 @@ public struct Metrics
     public ushort RrSpeedKmh;
 }
 
-public class Mx5NcShmMetrics : IMetrics
+public class Mx5NcShmMetrics : IMetrics, IDisposable
 {
     private readonly Stopwatch _sw = new();
     private readonly MemoryMappedViewAccessor _accessor = MemoryMappedFile
@@ -51,6 +50,11 @@ public class Mx5NcShmMetrics : IMetrics
             var a = _accessor.ReadUInt16(0);
             return _sw.ElapsedTicks;
         }
+    }
+
+    public void Dispose()
+    {
+        _accessor.Dispose();
     }
 
     public void Setup()

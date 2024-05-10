@@ -3,14 +3,9 @@ using System.Diagnostics;
 
 namespace Mx5NcStn1110.DotnetSerialPort;
 
-public class Mx5NcDotnetSerialPortMetrics(string serialPortName, int baudRate) : IMetrics
+public class Mx5NcDotnetSerialPortMetrics(string serialPortName, int baudRate) : IMetrics, IDisposable
 {
     private readonly Stn1110 _stn = new(serialPortName, baudRate);
-
-    ~Mx5NcDotnetSerialPortMetrics()
-    {
-        _stn.Close();
-    }
     
     public ushort RedLine => 7000;
 
@@ -59,6 +54,11 @@ public class Mx5NcDotnetSerialPortMetrics(string serialPortName, int baudRate) :
     public ushort RrSpeedKmh => RawToSpeed(_rrSpeed);
     
     public long AvgParsingTicks { get; private set; }
+
+    public void Dispose()
+    {
+        _stn.Close();
+    }
 
     public void Setup()
     {

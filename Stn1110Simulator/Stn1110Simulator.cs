@@ -144,6 +144,12 @@ public partial class Stn1110Simulator
                 WriteLine($"{id}{data:X16}");
             }
 
+            /*WriteLine("08571ED34B79EB53FC8");
+            WriteLine("201725BB5766DC709FA");
+            WriteLine("2405F4F8A4BC9876F4B");
+            WriteLine("4302F95A180D3CBEE9E");
+            WriteLine("4B029635C6448FBCD3D");*/
+
             try
             {
                 await Task.Delay(100, cancellationToken);

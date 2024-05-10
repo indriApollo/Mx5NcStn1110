@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Mx5NcStn1110.Uds;
 
-public class Mx5NcUdsMetrics : IMetrics
+public class Mx5NcUdsMetrics : IMetrics, IDisposable
 {
     private const string ClientSocketName = "/tmp/mx5metrics.client.sock";
     private readonly Stopwatch _sw = new();
@@ -41,7 +41,7 @@ public class Mx5NcUdsMetrics : IMetrics
     public ushort RrSpeedKmh => BitConverter.ToUInt16(GetMetric(Command.GetRrSpeedKmh));
     public long AvgParsingTicks { get; private set; }
 
-    ~Mx5NcUdsMetrics()
+    public void Dispose()
     {
         _clientSocket.Close();
     }
