@@ -136,22 +136,27 @@ public partial class Stn1110Simulator
 
     private async Task SendMonitoringMessages(CancellationToken cancellationToken)
     {
+        Write("some garbage");
+        
         while (!cancellationToken.IsCancellationRequested)
         {
-            foreach (var id in _filteredCanIds)
-            {
-                var data = _random.NextInt64();
-                WriteLine($"{id}{data:X16}");
-            }
-
-            /*WriteLine("08571ED34B79EB53FC8");
-            WriteLine("201725BB5766DC709FA");
-            WriteLine("2405F4F8A4BC9876F4B");
-            WriteLine("4302F95A180D3CBEE9E");
-            WriteLine("4B029635C6448FBCD3D");*/
-
             try
             {
+                foreach (var id in _filteredCanIds)
+                {
+                    var data = _random.NextInt64();
+                    Write(id);
+                    await Task.Delay(3, cancellationToken); // simulate chopped transmission
+                    WriteLine($"{data:X16}");
+                }
+
+                /*WriteLine("08571ED34B79EB53FC8");
+                WriteLine("201725BB5766DC709FA");
+                WriteLine("2405F4F8A4BC9876F4B");
+                WriteLine("4302F95A180D3CBEE9E");
+                WriteLine("4B029635C6448FBCD3D");*/
+
+                
                 await Task.Delay(100, cancellationToken);
             }
             catch (TaskCanceledException)
