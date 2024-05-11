@@ -7,7 +7,7 @@ namespace DigitalDash;
 
 public class App : Application
 {
-    public static readonly Logic Logic = new(Program.UnixDomainSocketName, Program.SerialPortName, Program.BaudRate);
+    public static readonly Logic Logic = new(Program.SharedMemory, Program.UnixDomainSocketName, Program.SerialPortName, Program.BaudRate);
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);

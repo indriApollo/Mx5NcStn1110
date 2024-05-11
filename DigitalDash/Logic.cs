@@ -15,9 +15,9 @@ public class Logic
     private readonly IMetrics _metrics;
     private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
-    public Logic(string unixDomainSocketName, string serialPortName, int baudRate)
+    public Logic(bool sharedMemory, string unixDomainSocketName, string serialPortName, int baudRate)
     {
-        _metrics = MetricsFactory.GetMetrics(unixDomainSocketName, serialPortName, baudRate);
+        _metrics = MetricsFactory.GetMetrics(sharedMemory, unixDomainSocketName, serialPortName, baudRate);
         
         _metrics.Setup();
         
