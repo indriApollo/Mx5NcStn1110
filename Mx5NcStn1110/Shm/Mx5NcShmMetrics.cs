@@ -3,22 +3,25 @@ using System.IO.MemoryMappedFiles;
 
 namespace Mx5NcStn1110.Shm;
 
-public struct Metrics
-{
-    public ushort Rpm;
-    public ushort SpeedKmh;
-    public byte AcceleratorPedalPositionPct;
-    public byte CalculatedEngineLoadPct;
-    public short EngineCoolantTempC;
-    public byte ThrottleValvePositionPct;
-    public short IntakeAirTempC;
-    public byte FuelLevelPct;
-    public byte BrakesPct;
-    public ushort FlSpeedKmh;
-    public ushort FrSpeedKmh;
-    public ushort RlSpeedKmh;
-    public ushort RrSpeedKmh;
-}
+/* shared memory structure
+ * public struct Metrics
+ * {
+ *     public ushort Rpm;
+ *     public ushort SpeedKmh;
+ *     public byte AcceleratorPedalPositionPct;
+ *     public byte CalculatedEngineLoadPct;
+ *     public short EngineCoolantTempC;
+ *     public byte ThrottleValvePositionPct;
+ *     public short IntakeAirTempC;
+ *     public byte FuelLevelPct;
+ *     public byte BrakesPct;
+ *     public ushort FlSpeedKmh;
+ *     public ushort FrSpeedKmh;
+ *     public ushort RlSpeedKmh;
+ *     public ushort RrSpeedKmh;
+ * }
+ */
+
 
 public class Mx5NcShmMetrics : IMetrics, IDisposable
 {
@@ -47,7 +50,7 @@ public class Mx5NcShmMetrics : IMetrics, IDisposable
         get
         {
             _sw.Restart();
-            var a = _accessor.ReadUInt16(0);
+            _ = _accessor.ReadUInt16(0);
             return _sw.ElapsedTicks;
         }
     }
