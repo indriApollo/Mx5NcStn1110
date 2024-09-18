@@ -5,6 +5,8 @@ namespace Mx5NcStn1110.DotnetSerialPort;
 
 public class Mx5NcDotnetSerialPortMetrics(string serialPortName, int baudRate) : IMetrics, IDisposable
 {
+    private readonly StreamWriter _rawLogWriter = new("raw_log.txt", new FileStreamOptions {Mode = FileMode.OpenOrCreate, Access = FileAccess.ReadWrite});
+    
     private readonly Stn1110 _stn = new(serialPortName, baudRate);
     
     public ushort RedLine => 7000;
@@ -58,16 +60,19 @@ public class Mx5NcDotnetSerialPortMetrics(string serialPortName, int baudRate) :
     public void Dispose()
     {
         _stn.Close();
+        _rawLogWriter.WriteLine();
+        _rawLogWriter.Flush();
+        _rawLogWriter.Dispose();
     }
 
     public void Setup()
     {
         _stn.SetupConnection();
-        _stn.AddFilter(CanId.Brakes);
+        //_stn.AddFilter(CanId.Brakes);
         _stn.AddFilter(CanId.RpmSpeedAccel);
-        _stn.AddFilter(CanId.LoadCoolantThrottleIntake);
-        _stn.AddFilter(CanId.FuelLevel);
-        _stn.AddFilter(CanId.WheelSpeeds);
+        //_stn.AddFilter(CanId.LoadCoolantThrottleIntake);
+        //_stn.AddFilter(CanId.FuelLevel);
+        //_stn.AddFilter(CanId.WheelSpeeds);
     }
 
     public async Task CollectAsync(CancellationToken cancellationToken)
@@ -128,6 +133,7 @@ public class Mx5NcDotnetSerialPortMetrics(string serialPortName, int baudRate) :
         _rpm = BinaryPrimitives.ReadUInt16BigEndian(data.AsSpan()[..2]);
         _speed = BinaryPrimitives.ReadUInt16BigEndian(data.AsSpan()[4..6]);
         _acceleratorPedalPosition = data[6];
+        _rawLogWriter.Write($"{_acceleratorPedalPosition},");
     }
 
     private void ParseLoadCoolantThrottleIntake(byte[] data)
