@@ -18,8 +18,7 @@ public class Mx5NcDotnetSerialPortMetrics(string serialPortName, int baudRate) :
     public ushort SpeedKmh => RawToSpeed(_speed);
 
     private byte _acceleratorPedalPosition;
-    // TODO fix: reports 144 % when flat out lol, max was 220 % !
-    public byte AcceleratorPedalPositionPct => (byte)(_acceleratorPedalPosition * 2);
+    public byte AcceleratorPedalPositionPct => (byte)(_acceleratorPedalPosition / 2);
 
     private byte _calculatedEngineLoad;
     public byte CalculatedEngineLoadPct => (byte)(_calculatedEngineLoad / 2.55f);
